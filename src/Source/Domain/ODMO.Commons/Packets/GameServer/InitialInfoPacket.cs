@@ -131,7 +131,7 @@ namespace ODMO.Commons.Packets.GameServer
             WriteShort(character.Partner.AttributeExperience.Thunder);
             WriteShort(character.Partner.AttributeExperience.Steel);
 
-            WriteInt(0); //nUID (não é mais utilizado?)
+            WriteInt(character.Partner.GeneralHandler); //nUID (nï¿½o ï¿½ mais utilizado?)
             WriteByte(0); //TODO: CashSkillCount (se passar acima de 0, informar o objeto)
 
             byte slot = 1;
@@ -205,8 +205,8 @@ namespace ODMO.Commons.Packets.GameServer
                 WriteShort(digimon.AttributeExperience.Thunder);
                 WriteShort(digimon.AttributeExperience.Steel);
 
-                WriteInt(16404); //16404
-                WriteByte(0);
+                WriteInt(digimon.GeneralHandler); 
+                WriteByte(0); //Skill 
 
                 slot++;
             }
@@ -272,10 +272,10 @@ namespace ODMO.Commons.Packets.GameServer
             for (int i = 0; i < 32; i++)
                 WriteInt(0);
 
-            WriteInt(0); //versão do game
+            WriteInt(0); //versï¿½o do game
             WriteInt(2); //nWorkDayHistory (total de dias evento login diario)
             WriteInt(0); //nTodayAttendanceTimeTS (tempo restante do dia atual)
-            WriteInt(0); //Id Boss vivo no mapa atual (já é passado no ComplementarInfo)
+            WriteInt(0); //Id Boss vivo no mapa atual (jï¿½ ï¿½ passado no ComplementarInfo)
             WriteByte(0); //PC Bang (???)
 
             //ConsignedShop
@@ -290,10 +290,10 @@ namespace ODMO.Commons.Packets.GameServer
             else
                 WriteInt(0);
 
-            WriteInt(0); //clientOption (aparenta ter relação com o tutorial)
+            WriteInt(0); //clientOption (aparenta ter relaï¿½ï¿½o com o tutorial)
             WriteInt(0); //Achievement rank
 
-            WriteByte(0); //hatch atual já rodou minigame
+            WriteByte(0); //hatch atual jï¿½ rodou minigame
             WriteShort(0); //total de sucesso do minigame (TODO: externalizar % por tentativa bem sucedida)
 
             var Buffs = character.ActiveSkill.Where(x =>
@@ -358,15 +358,15 @@ namespace ODMO.Commons.Packets.GameServer
                 WriteByte(0);
             }
 
-            WriteByte(0); //bloqueio de chat (se passar 1, informar a duração)
-            //WriteInt(60);//Duração block chat em segundos 
-            //Obs.: Passar 0 posteriormente não remove o valor da duração passado anteriormente.
+            WriteByte(0); //bloqueio de chat (se passar 1, informar a duraï¿½ï¿½o)
+            //WriteInt(60);//Duraï¿½ï¿½o block chat em segundos 
+            //Obs.: Passar 0 posteriormente nï¿½o remove o valor da duraï¿½ï¿½o passado anteriormente.
             WriteByte(0); //master match (1 = equipe A, 2 = equipe B)
 
             // TODO: Encyclopedia deckbuff the most OP is 1021, this is the DeckGroupID in xml
             if (character.DeckBuffId == null)
             {
-                WriteByte(0);
+                WriteInt(0);
             }
             else
             {
@@ -376,8 +376,6 @@ namespace ODMO.Commons.Packets.GameServer
             WriteByte(0); //Megaphone ban (1 = block)
 
             WriteInt(0);
-
-            WriteBytes(new byte[29]);
         }
     }
 }
